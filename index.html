@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project ChefAI: Mobile App Idea Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Visualization & Content Choices:
+        - Overview (Vision & Goal): Prominent text block with an introductory paragraph. Goal: Inform. Method: HTML/Tailwind. Interaction: Static. Justification: Clear project summary.
+        - Core Features: Interactive cards for feature categories, expandable to show details. Goal: Inform, Organize. Method: HTML/Tailwind, JS for toggle. Interaction: Click to expand. Justification: Easy scanning and deep-dive.
+        - Tech Stack (Frontend, Backend, DB, AI/ML, Cloud): Segmented blocks with icons (Unicode). Goal: Inform, Organize. Method: HTML/Tailwind. Interaction: Static display of details. Justification: Clear separation of tech components.
+        - AI/ML Deep Dive: Nested lists/structured layout for AI tools and techniques. Goal: Inform, Explain. Method: HTML/Tailwind. Interaction: Static display. Justification: Detailed view of the AI learning aspects.
+        - Roadmap (Phased Plan): Series of cards for each phase, expandable for tasks & AI learning. Goal: Inform, Show Progression. Method: HTML/Tailwind, JS for toggle. Interaction: Click to expand. Justification: Step-by-step project and learning flow.
+        - AI Engineer Path (Key Learnings, Challenges): Formatted lists. Goal: Inform. Method: HTML/Tailwind. Interaction: Static. Justification: Clear takeaways.
+        - No data charts (e.g., Chart.js) are used as the source document is a project plan, not a data report. Focus is on interactive presentation of textual and structural information.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfbf6; /* Warm neutral background */
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button.active {
+            border-bottom-color: #14b8a6; /* Teal accent */
+            color: #0d9488; /* Darker Teal */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .feature-card, .roadmap-phase {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .details {
+            display: none;
+            margin-top: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #14b8a6; /* Teal accent */
+        }
+        .details.open {
+            display: block;
+        }
+        .toggle-button {
+            cursor: pointer;
+            color: #0d9488; /* Darker Teal */
+            font-weight: 600;
+        }
+        .tech-stack-card {
+            background-color: #f0fdfa; /* Light teal background */
+            border: 1px solid #99f6e4; /* Teal border */
+        }
+        .section-intro {
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            color: #374151; /* Gray-700 */
+            margin-bottom: 1.5rem;
+            background-color: #f3f4f6; /* Light gray background for intro */
+            padding: 1rem;
+            border-radius: 0.375rem;
+        }
+         h2 {
+            font-size: 1.875rem; /* 30px */
+            font-weight: 700;
+            color: #115e59; /* Darker teal variant */
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #5eead4; /* Lighter teal accent */
+        }
+        h3 {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 600;
+            color: #0f766e; /* Teal variant */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+         h4 {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600;
+            color: #115e59; /* Darker teal variant */
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .icon {
+            margin-right: 0.5rem;
+            color: #14b8a6; /* Teal accent */
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-teal-700">Project ChefAI: Mobile App Idea Explorer</h1>
+            <p class="text-lg text-gray-600 mt-2">An interactive guide to the project plan for ChefAI, an AI-Powered Mobile Meal Planning & Preparation Assistant.</p>
+        </header>
+
+        <nav class="mb-8 border-b border-gray-300">
+            <ul class="flex flex-wrap -mb-px justify-center text-sm font-medium text-center text-gray-500">
+                <li class="mr-2">
+                    <button class="tab-button inline-block p-4 rounded-t-lg active" data-tab="overview">🎯 Overview</button>
+                </li>
+                <li class="mr-2">
+                    <button class="tab-button inline-block p-4 rounded-t-lg" data-tab="features">✨ Core Features</button>
+                </li>
+                <li class="mr-2">
+                    <button class="tab-button inline-block p-4 rounded-t-lg" data-tab="tech">📱 Tech Deep Dive</button>
+                </li>
+                <li class="mr-2">
+                    <button class="tab-button inline-block p-4 rounded-t-lg" data-tab="roadmap">🗺️ Roadmap</button>
+                </li>
+                <li>
+                    <button class="tab-button inline-block p-4 rounded-t-lg" data-tab="ai-path">🔑 AI Engineer Path</button>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="overview" class="content-section active">
+                <h2>🎯 Project Overview: ChefAI Mobile App</h2>
+                <p class="section-intro">This section outlines the primary vision and goals for **ChefAI**, an AI-Powered Mobile Meal Planning & Preparation Assistant. It serves as a foundation for understanding the project's purpose as a mobile application and your learning objectives in transitioning to an AI Engineer role with a focus on mobile AI solutions.</p>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-teal-600">Vision & Goal</h3>
+                    <p class="mt-2 text-gray-700">The primary vision for **ChefAI** is to develop an intelligent **mobile application (for iOS and Android)** that streamlines the entire process of weekly meal planning, grocery shopping, and daily meal preparation. By leveraging Artificial Intelligence, ChefAI will understand recipes, learn user dietary and taste preferences, and provide timely, actionable guidance directly on the user's mobile device. This mobile-first approach emphasizes convenience, on-the-go access to meal plans and grocery lists (e.g., in the supermarket), and effective reminders via push notifications. For you, as a senior programmer, this project serves as a practical, hands-on learning platform to dive deep into AI programming, particularly NLP, recommendation systems, and mobile AI integration, with the ultimate goal of transitioning into an AI Engineer role specializing in creating intelligent mobile experiences.</p>
+                </div>
+            </section>
+
+            <section id="features" class="content-section">
+                <h2>✨ Core Features (Mobile Focus)</h2>
+                <p class="section-intro">Explore the comprehensive set of features designed for the **ChefAI mobile app**. Each category below details specific functionalities aimed at simplifying the user's culinary journey on their mobile device. Click on a feature category to see more details.</p>
+
+                <div class="feature-card">
+                    <h4 class="toggle-button"><span class="icon">📱</span>Recipe Aggregation & Ingestion <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li><strong>Manual Input:</strong> Users can easily add their own recipes directly into the mobile app.</li>
+                            <li><strong>Automated Sourcing:</strong> System extracts recipes from online sources, viewable and manageable on mobile.</li>
+                            <li><strong>Scan Recipe (Mobile OCR - Enhancement):</strong> Users can potentially use their phone camera to scan physical recipes, with AI (OCR) digitizing the text.</li>
+                            <li><strong>API Integration (Optional):</strong> Integrate with recipe APIs for structured data, displayed within the app.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h4 class="toggle-button"><span class="icon">🧠</span>Intelligent Recipe Understanding (AI Core) <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li><strong>Ingredient Parsing:</strong> NLP (likely backend, results to mobile) extracts ingredients, quantities, and units.</li>
+                            <li><strong>Instruction & Prep Step Extraction:</strong> Differentiates night-before and day-of cooking steps.</li>
+                            <li><strong>Dietary & Cuisine Classification (Enhancement):</strong> Auto-tags recipes for personalized mobile filtering.</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="feature-card">
+                    <h4 class="toggle-button"><span class="icon">📅</span>Personalized Weekly Menu Generation (AI Core) <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li><strong>Preference Capture:</strong> Users input preferences via the mobile interface.</li>
+                            <li><strong>AI-Driven Planning:</strong> Generates personalized weekly meal plans, accessible anytime on mobile.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h4 class="toggle-button"><span class="icon">🛒</span>Automated Mobile Grocery List <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li><strong>Consolidated List:</strong> Interactive grocery list on the mobile app for use in-store.</li>
+                            <li><strong>Smart Categorization (Enhancement):</strong> Potentially categorizes items by store aisle.</li>
+                            <li><strong>Inventory Management:</strong> Users mark existing ingredients via the app.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h4 class="toggle-button"><span class="icon">🔔</span>Proactive Mobile Reminders & Guidance <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li><strong>Push Notifications:</strong> Automated mobile push notifications for prep tasks (defrosting, soaking).</li>
+                            <li><strong>Day-Of Recipe Access:</strong> Push notification linking directly to the full recipe within the app.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h4 class="toggle-button"><span class="icon">📲</span>Intuitive Mobile User Interface <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <p class="text-gray-700">A clean, responsive, and native-feeling mobile application designed for iOS and Android, ensuring a seamless user experience.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tech" class="content-section">
+                <h2>📱 Tech Deep Dive for ChefAI Mobile App</h2>
+                <p class="section-intro">This section breaks down the proposed technical architecture for the **ChefAI mobile app**, including mobile frontend technologies, backend services, database choices, and crucial AI/ML components. Understanding this stack is key to your AI engineering journey focused on mobile solutions.</p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="feature-card tech-stack-card">
+                        <h3 class="text-teal-700"><span class="icon">🖼️</span>Mobile Frontend</h3>
+                        <p><strong>Cross-Platform Options:</strong> React Native (JS/TS), Flutter (Dart), .NET MAUI (C#)</p>
+                        <p><strong>Native Options:</strong> Swift/Objective-C (iOS), Kotlin/Java (Android)</p>
+                        <p><strong>Purpose:</strong> Building the native mobile application interface for iOS and Android.</p>
+                    </div>
+                    <div class="feature-card tech-stack-card">
+                        <h3 class="text-teal-700"><span class="icon">⚙️</span>Backend</h3>
+                        <p><strong>Technology:</strong> Node.js w/ TypeScript or ASP.NET Core (C#)</p>
+                        <p><strong>Purpose:</strong> Secure API for mobile client, business logic, DB interaction, AI service calls.</p>
+                    </div>
+                    <div class="feature-card tech-stack-card">
+                        <h3 class="text-teal-700"><span class="icon">🗄️</span>Database</h3>
+                        <p><strong>Technology:</strong> MongoDB (NoSQL) or PostgreSQL (SQL)</p>
+                        <p><strong>Purpose:</strong> Store user data, recipes, preferences, menus for mobile app access.</p>
+                    </div>
+                </div>
+
+                <h3 class="text-teal-700 mt-8"><span class="icon">🤖</span>AI/ML Components & Services (Mobile Context)</h3>
+                <div class="space-y-4">
+                    <div class="feature-card">
+                        <h4>Recipe Scraping (Backend) & OCR (Mobile Enhancement)</h4>
+                        <p><strong>Scraping:</strong> Puppeteer, Playwright, Beautiful Soup, Scrapy (Backend process).</p>
+                        <p><strong>OCR for "Scan Recipe":</strong> AWS Textract, Google Cloud Vision API (Cloud-based), or on-device OCR libraries (e.g., ML Kit).</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Natural Language Processing (NLP) for Recipe Parsing</h4>
+                        <p><strong>Approach:</strong> Primarily backend processing for complex NLP (Python: spaCy, NLTK, Hugging Face Transformers; Cloud: AWS Comprehend, Google NL API).</p>
+                        <p><strong>Mobile Considerations:</strong> Potential for simpler on-device NLP (e.g., TensorFlow Lite, Core ML models) for offline tasks or quick tagging, if feasible.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Menu Generation (Recommendation Engine)</h4>
+                        <p><strong>Approach:</strong> Backend processing (Content-Based Filtering; Python: scikit-learn, TensorFlow/PyTorch; Cloud: AWS Personalize).</p>
+                        <p><strong>Mobile Delivery:</strong> Recommendations fetched by mobile app via API.</p>
+                    </div>
+                </div>
+
+                <h3 class="text-teal-700 mt-8"><span class="icon">☁️</span>Cloud Platform & Mobile Services</h3>
+                 <div class="grid md:grid-cols-2 gap-6">
+                    <div class="feature-card tech-stack-card">
+                        <h4 class="text-teal-700">Mobile Notification System</h4>
+                        <p><strong>Services:</strong> Firebase Cloud Messaging (FCM), Apple Push Notification service (APNs).</p>
+                        <p><strong>Backend Trigger:</strong> AWS SNS can still orchestrate sending to FCM/APNs.</p>
+                    </div>
+                    <div class="feature-card tech-stack-card">
+                        <h4 class="text-teal-700">Primary Cloud: AWS</h4>
+                        <p><strong>Role:</strong> Robust backend for mobile app (MBaaS capabilities).</p>
+                        <p><strong>Services:</strong> Lambda, Fargate, API Gateway (for mobile clients), S3, DynamoDB, Comprehend, Personalize, SageMaker, Amplify (for mobile dev/hosting).</p>
+                    </div>
+                </div>
+                
+                <h3 class="text-teal-700 mt-8"><span class="icon">🔗</span>Data Sources & Mobile Integrations</h3>
+                <div class="feature-card">
+                    <p><strong>Primary Data:</strong> User-inputted, scraped recipes accessible via mobile.</p>
+                    <p><strong>External APIs:</strong> Spoonacular, Edamam, TheMealDB, YouTube Data API (results presented in-app).</p>
+                    <p><strong>Mobile Integrations (Potential):</strong> Phone Camera (for OCR), Calendar app (scheduling cooking), Share functionality.</p>
+                </div>
+            </section>
+
+            <section id="roadmap" class="content-section">
+                <h2>🗺️ Phased Development Plan / Roadmap for ChefAI Mobile App</h2>
+                <p class="section-intro">This roadmap outlines a structured, phased approach to developing the **ChefAI mobile app**. Each phase has a specific focus, set of tasks, and key AI/Mobile learning objectives, guiding your development and learning journey. Click on a phase to see more details.</p>
+                
+                <div class="roadmap-phase">
+                    <h4 class="toggle-button"><span class="icon">1️⃣</span>Phase 1: Foundation, Mobile Tech & Basic UI (MVP 1) <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <p><strong>Focus:</strong> Choose mobile tech stack (e.g., React Native, Flutter, MAUI), basic app structure, wireframes, manual recipe input on mobile.</p>
+                        <p><strong>Tasks:</strong> Setup mobile dev environment, basic UI for recipe entry/viewing, simple list generation (local), backend API setup.</p>
+                        <p><strong>AI/Mobile Learning:</strong> Mobile development basics, UI/UX for mobile, API integration from mobile.</p>
+                    </div>
+                </div>
+                <div class="roadmap-phase">
+                    <h4 class="toggle-button"><span class="icon">2️⃣</span>Phase 2: Recipe Scraping (Backend) & Initial NLP (Mobile Display) <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <p><strong>Focus:</strong> Backend recipe ingestion, basic NLP parsing, display parsed data in mobile app.</p>
+                        <p><strong>Tasks:</strong> Implement backend scraper, basic NLP for ingredients, API to serve parsed recipes to mobile, refine mobile UI for recipe details.</p>
+                        <p><strong>AI/Mobile Learning:</strong> Backend AI processing, consuming AI results in mobile, data synchronization.</p>
+                    </div>
+                </div>
+                <div class="roadmap-phase">
+                    <h4 class="toggle-button"><span class="icon">3️⃣</span>Phase 3: User Preferences & Rule-Based Menu (Mobile UI) <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <p><strong>Focus:</strong> Mobile UI for user preferences, backend rule-based menu suggestion, mobile display of menu.</p>
+                        <p><strong>Tasks:</strong> Mobile forms for preferences, backend logic for suggestions, API for menu, interactive menu display on mobile.</p>
+                        <p><strong>AI/Mobile Learning:</strong> Complex mobile forms, state management in mobile, displaying dynamic AI-generated content.</p>
+                    </div>
+                </div>
+                <div class="roadmap-phase">
+                    <h4 class="toggle-button"><span class="icon">4️⃣</span>Phase 4: Advanced NLP/OCR & Smarter Recommendations (Mobile First) <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <p><strong>Focus:</strong> Enhance recipe understanding (prep steps, OCR), implement content-based recommendations for mobile users.</p>
+                        <p><strong>Tasks:</strong> Improve backend NLP, integrate OCR (cloud or on-device library), build recommendation engine, refine mobile UI for recommendations.</p>
+                        <p><strong>AI/Mobile Learning:</strong> OCR integration, on-device ML (potential), advanced recommendation display on mobile, performance optimization.</p>
+                    </div>
+                </div>
+                <div class="roadmap-phase">
+                    <h4 class="toggle-button"><span class="icon">5️⃣</span>Phase 5: Push Notifications, Offline Sync & UX Polish <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <p><strong>Focus:</strong> Implement mobile push notifications, basic offline data access (e.g., current grocery list), polish mobile UX/UI.</p>
+                        <p><strong>Tasks:</strong> Integrate FCM/APNs, implement local caching/storage for offline, extensive mobile testing, UI refinements.</p>
+                        <p><strong>AI/Mobile Learning:</strong> Push notification systems, mobile data persistence, mobile app testing and debugging.</p>
+                    </div>
+                </div>
+                 <div class="roadmap-phase">
+                    <h4 class="toggle-button"><span class="icon">🚀</span>Phase 6: App Store Deployment & Advanced Features <span class="text-xs">(Click to expand)</span></h4>
+                    <div class="details">
+                        <p><strong>Focus:</strong> Prepare for app store submission, add advanced mobile features (e.g., widget, sharing).</p>
+                        <p><strong>Tasks:</strong> App store listing creation, build release versions, implement platform-specific features, gather user feedback post-launch.</p>
+                        <p><strong>AI/Mobile Learning:</strong> App store deployment process, mobile analytics, A/B testing on mobile.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai-path" class="content-section">
+                <h2>🔑 AI Engineer Path for ChefAI: Learnings & Challenges (Mobile Focus)</h2>
+                <p class="section-intro">The **ChefAI mobile app** project is designed as a launchpad for your transition into an AI Engineer role with mobile expertise. This section highlights the key skills you'll acquire and potential challenges you might encounter.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="feature-card">
+                        <h3 class="text-teal-700"><span class="icon">🎓</span>Key Learning Areas</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-700 mt-2">
+                            <li><strong>Mobile Development:</strong> Proficiency in chosen stack (React Native, Flutter, MAUI, or Native).</li>
+                            <li><strong>Mobile UI/UX Principles:</strong> Designing intuitive interfaces for smaller screens.</li>
+                            <li><strong>Practical NLP & OCR:</strong> Real-world data extraction from recipes, including scanned images.</li>
+                            <li><strong>Recommendation Systems for Mobile:</strong> Delivering personalized suggestions effectively on mobile.
+                            <li><strong>On-Device AI (Potential):</strong> Using TensorFlow Lite, Core ML for offline/fast AI tasks.</li>
+                            <li><strong>Cloud AI for Mobile Backend:</strong> Leveraging AWS Comprehend, Personalize, SageMaker to support mobile clients.</li>
+                            <li><strong>Push Notifications & Mobile Services:</strong> Integrating FCM, APNs.</li>
+                            <li><strong>App Store Deployment & Management.</strong></li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="text-teal-700"><span class="icon">🤔</span>Potential Challenges & Considerations</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-700 mt-2">
+                            <li><strong>Mobile Platform Complexity:</strong> Different OS behaviors, device fragmentation.</li>
+                            <li><strong>Performance Optimization for Mobile:</strong> CPU, memory, battery usage.</li>
+                            <li><strong>Offline Data Sync & Functionality.</strong></li>
+                            <li><strong>App Store Approval Processes & Guidelines.</strong></li>
+                            <li><strong>AI Model Size & Latency:</strong> Balancing on-device vs. cloud AI processing.</li>
+                            <li><strong>User Privacy on Mobile:</strong> Handling permissions (camera, notifications) carefully.</li>
+                            <li><strong>Recipe Data Variability & OCR Accuracy.</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-sm text-gray-500">&copy; <span id="currentYear"></span> Project ChefAI: Idea Explorer. For learning and demonstration purposes.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contentSections = document.querySelectorAll('.content-section');
+            const toggleButtons = document.querySelectorAll('.toggle-button');
+
+            // Tab navigation
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const targetTab = this.getAttribute('data-tab');
+                    contentSections.forEach(section => {
+                        if (section.id === targetTab) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                     // Scroll to the top of the content area for better UX on tab switch
+                    const mainContentArea = document.querySelector('main');
+                    if (mainContentArea) {
+                        mainContentArea.scrollTop = 0; // For main element if it's scrollable
+                    }
+                    document.documentElement.scrollTop = mainContentArea.offsetTop - 80; // For the whole page, adjust offset as needed
+                });
+            });
+
+            // Expand/collapse functionality
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const details = this.nextElementSibling;
+                    if (details && details.classList.contains('details')) {
+                        details.classList.toggle('open');
+                        // Change text based on open state if desired
+                        const expandText = this.querySelector('.text-xs');
+                        if (expandText) {
+                            if (details.classList.contains('open')) {
+                                expandText.textContent = '(Click to collapse)';
+                            } else {
+                                expandText.textContent = '(Click to expand)';
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
